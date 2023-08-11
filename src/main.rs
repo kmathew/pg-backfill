@@ -13,8 +13,6 @@ pub struct TestPlayer {
 #[tokio::main] // By default, tokio_postgres uses the tokio crate as its runtime.
 async fn main() -> Result<(), Error> {
     // Connect to the database.
-    //prod BpqA/uip3SlL9U7Hjr5P8AP6W6cfKzCJT1j3Qvzr32o=
-    //staging QY5sFRuhqrF1Vyew9+D8+jVuuZ9UclTUHgy5aJVzD/rV
 
     let args: Vec<String> = env::args().collect();
 
@@ -54,11 +52,7 @@ async fn main() -> Result<(), Error> {
 
     let query = "SELECT player_id, app_id, name from test_players WHERE created_at <= '2023-08-05'";
     //let query = "SELECT player_id, app_id, name from test_players WHERE created_at >= '2023-08-05' AND player_id = '6d4b3e44-a010-452b-8b7a-628340a629b0'";
-    //     "SELECT id from notifications where \"isEmail\"=true AND (\"email_body\" LIKE '%onesignal-email.s3.amazonaws.com%' OR \"bee_editor_json\" LIKE '%onesignal-email.s3.amazonaws.com%') LIMIT 500";
-    // // "SELECT id from template_contents where \"isEmail\"=true AND (\"email_body_json\" LIKE '%onesignal-email.s3.amazonaws.com%' OR \"email_body\" LIKE '%onesignal-email.s3.amazonaws.com%') LIMIT 500";
-    //"SELECT id from template_contents where \"isEmail\"=true AND (\"email_body_json\" LIKE '%bee-editor.s3.amazonaws.com%' OR \"email_body\" LIKE '%bee-editor.s3.amazonaws.com%') LIMIT 1000";
-    //"SELECT id from template_contents where \"isEmail\"=true AND (\"email_body_json\" LIKE '%beefree-storage.test.onesignal.com%' OR \"email_body\" LIKE '%beefree-storage.test.onesignal.com%') LIMIT 2";
-    //"SELECT id from template_contents where \"isEmail\"=true";
+
     let statement = replica.prepare(query).await?;
     println!("{}", query);
     let rows = replica.query(&statement, &[]).await?;
